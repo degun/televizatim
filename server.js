@@ -78,7 +78,12 @@ io.on('connection', function(socket){
   });
 
   socket.on('disconnect', function(){
-    console.log(socket.username + ' doli nga dhoma ' + socket.room);
+    var index = dhomat[socket.room].indexOf(socket.username);
+    dhomat[socket.room].splice(index, 1);
+    if(dhomat[socket.room].length == 0){
+      delete dhomat[socket.room];
+    }
+    console.log(socket.username + ' doli nga ' + socket.room);
   });
 
 });
