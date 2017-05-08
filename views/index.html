@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vendi për të lozur</title>
+	<link rel="stylesheet" href="/bower_components/drawingboard.js/dist/drawingboard.min.css">
+	<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+	<header>
+		
+	</header>
+	<div id="hyrja">
+		<form class="hyrje">
+			<input class="nofka" type="text" name="nofka">
+			<input class="dhoma" type="text" name="dhoma">
+			<input class="hyr" type="button" value="Hyr">
+		</form>
+	</div>
+
+	<div id="loja">
+		<div id="users">
+			<div class="titull"></div>
+			<ul></ul>
+		</div>
+		<div id="viz"></div>
+		<div id="chat">
+			<div class="titull"></div>
+			<ul></ul>
+			<input type="text" class="msg">
+		</div>
+	</div>
+		
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="/bower_components/drawingboard.js/dist/drawingboard.min.js"></script>
+	<script src="/func/main.js"></script>	
+</body>
+</html>
