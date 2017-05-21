@@ -48,6 +48,7 @@ table {
 }
 
 
+
 /* këtu fillon stilimi im */
 
 body{
@@ -58,8 +59,8 @@ body{
 header{
 	height: 100px;
 	margin-bottom: 5px;
-	background-color: #294F6D;
-	border-bottom: 1px solid #878DB9;
+	background-color: rgba(255,255,255,0);
+	filter: blur(40px);
 }
 
 form.hyrje{
@@ -93,46 +94,50 @@ form.hyrje{
 }
 
 #users{
-	width: 250px;
-	height: 600px;
-	background-color: white;
-	border: 1px solid #a95938;
+	width: 150px;
+	height: auto;
+	background-color: #E5FCC2;
 	margin-right: 5px;
+	border-radius: 3px;
 }
 
 li.usr{
 	height: 2em;
 	font-family: Arial, sans-serif;
 	padding: 10px;
-	font-size: 1.6em;
+	font-size: 1.3em;
 	color: #294F6D;
 }
 
 li:nth-child(even){
-	background-color: #eee;
+	background-color: #E5FCC2;
 }
 
 li:nth-child(odd){
-	background-color: #fff;
+	background-color: #F6FFE8;
 }
-
 
 .titull{
 	height: 28px;
 	padding: 5px;
-	background-color: #a95938;
+	display: block;
+	position: relative;
+	background-color: #45ADA8;
 	vertical-align: middle;
 	text-align: center;
 	border-bottom: 1px solid #BFC2CF;
 	color: #294F6D;
 	font-family: Arial, sans-serif;
 	font-size: 1.2em;
+	z-index: 10;
+	border-radius: 3px;
 }
 
 #viz{
-	width: 600px;
-	height: 574px;	
-	background-color: #a95938;
+	width: 300px;
+	height: 274px;	
+	background-color: #45ADA8;
+	border-radius: 3px;
 }
 
 .drawing-board-controls{
@@ -142,11 +147,11 @@ li:nth-child(odd){
 #chat{
 	position: relative;
 	width: 250px;
-	height: 562px;
-	background-color: white;
-	border: 1px solid #a95938;
+	height: 262px;
+	background-color: #E5FCC2;
 	margin-left: 5px;
 	padding-bottom: 38px;
+	overflow: auto;
 }
 
 li.msgx{
@@ -154,6 +159,7 @@ li.msgx{
 	font-family: Arial, sans-serif;
 	font-size: 1em;
 	color: #294F6D;
+	height: 20px;
 }
 
 
@@ -170,7 +176,12 @@ input.msg{
 }
 
 #chat ul{
-
+	position: absolute;
+	bottom: 43px;
+	width: 100%;
+	overflow-y: auto;
+	max-height: 217px;
+	border-radius: 3px;
 }
 
 

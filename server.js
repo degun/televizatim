@@ -14,27 +14,41 @@ var dhomat = {};
 
 io.on('connection', function(socket){
 
-  // sapo hyn një user, ruajmë nofkën dhe dhomën
+  // sapo hyn një user, ruajmë nofkën dhe dhomën etj etj
   socket.on('hyri', function(nofke, dhome){
     socket.username = nofke;
     socket.room = dhome;
     socket.join(dhome);
 
-    if(dhome in dhomat){
-      dhomat[dhome].push(nofke);
+    if(socket.room in dhomat){
+      dhomat[socket.room].nofkat.push({emri: nofke, piket: 0, rangu: 1});
     }else{
-      dhomat[dhome] = [];
-      dhomat[dhome].push(nofke);
+      dhomat[socket.room] = { 
+                              nofkat: [], 
+                              curImg: '', 
+                              curMadhesi: '2', 
+                              curColor: '#000', 
+                              curMjet: 'pencil'
+                            };
+      dhomat[socket.room].nofkat.push({emri: nofke, piket: 0, rangu: 1});
     }
-
     console.log(nofke +' hyri në '+ dhome)
-    io.sockets.in(socket.room).emit('updatePlayers', dhomat[dhome]);
-
+    io.sockets.in(socket.room).emit('updatePlayers', dhomat[socket.room].nofkat.map(function(nofk){
+      return nofk.emri;
+    }));
+    socket.broadcast.to(socket.room).emit('in', nofke);
+    socket.emit('tools', dhomat[socket.room].curMadhesi, dhomat[socket.room].curColor, dhomat[socket.room].curMjet);
+    socket.emit('loadHistory', dhomat[socket.room].curImg);
   });
 
-    // dërgoju gjithë të tjerëve përveç meje: fillo të vizatosh
+  // dërgoju gjithë të tjerëve përveç meje: fillo të vizatosh
+  socket.on('imazhiTani', function(){
+    socket.emit('loadHistory',  dhomat[socket.room].curImg);
+  });
+
+  // dërgoju gjithë të tjerëve përveç meje: fillo të vizatosh
   socket.on('chat msg', function(user, msg){
-    io.sockets.in(socket.room).emit('mesazh', user, msg);
+    io.in(socket.room).emit('message', user, msg);
   });
 
   // dërgoju gjithë të tjerëve përveç meje: fillo të vizatosh
@@ -52,8 +66,23 @@ io.on('connection', function(socket){
     socket.broadcast.to(socket.room).emit('stopLine', coords);
   });
 
+  // dërgoju gjithë të tjerëve përveç meje: ndalo së vizatuari
+  socket.on('mouse jashte', function(){
+    socket.broadcast.to(socket.room).emit('mouse out');
+  });
+
+  // dërgoju gjithë të tjerëve përveç meje: vizato
+  socket.on('mouse brenda', function(coords){
+    socket.broadcast.to(socket.room).emit('mouse in', coords);
+  });
+
+  socket.on('ruajHistorine', function(img){
+    dhomat[socket.room].curImg = img;
+  });
+
   // dërgoju gjithë të tjerëve përveç meje: fillo të vizatosh
   socket.on('ndryshoMjet', function(mode){
+    dhomat[socket.room].curMjet = mode;
     socket.broadcast.to(socket.room).emit('changeMode', mode);
   });
 
@@ -69,21 +98,25 @@ io.on('connection', function(socket){
 
   // dërgoju gjithë të tjerëve përveç meje: fshi komplet
   socket.on('ndryshoNgjyre', function(color){
+    dhomat[socket.room].curColor = color;
     socket.broadcast.to(socket.room).emit('changeColor', color);
   });
 
   // dërgoju gjithë të tjerëve përveç meje: fshi komplet
   socket.on('ndryshoMaje', function(size){
+    dhomat[socket.room].curMadhesi = size;
     socket.broadcast.to(socket.room).emit('changeSize', size);
   });
 
   socket.on('disconnect', function(){
-    var index = dhomat[socket.room].indexOf(socket.username);
-    dhomat[socket.room].splice(index, 1);
-    if(dhomat[socket.room].length == 0){
+    var index = dhomat[socket.room].nofkat.indexOf(socket.username);
+    dhomat[socket.room].nofkat.splice(index, 1);
+    if(dhomat[socket.room].nofkat.length == 0){
       delete dhomat[socket.room];
     }
     console.log(socket.username + ' doli nga ' + socket.room);
+    socket.broadcast.to(socket.room).emit('out', socket.username);
+    socket.broadcast.to(socket.room).emit('updatePlayers', dhomat[socket.room]);
   });
 
 });
