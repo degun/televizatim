@@ -49,6 +49,9 @@ table {
 
 
 
+
+
+
 /* këtu fillon stilimi im */
 
 body{
@@ -63,12 +66,12 @@ header{
 	filter: blur(40px);
 }
 
-form.hyrje{
+/*form.hyrje{
 	position: absolute;
 	top: 35%;
 	left: 37%;
 	background-color: white;
-}
+}*/
 
 
 .hyrje input:not(.hyr){
@@ -88,9 +91,21 @@ form.hyrje{
 	left: 38%;
 }
 
+#intermezzo{
+	display: none;
+}
+
 #loja{
 	display: none;
 	justify-content: center;
+}
+
+#mesazhe button{
+	position: relative;
+	top: 47%;
+	margin: 5px;
+	width: auto;
+	height: 20px;
 }
 
 #users{
