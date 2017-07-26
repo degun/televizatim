@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Vendi për të lozur</title>
@@ -7,21 +8,27 @@
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/main.css">
 </head>
+
 <body>
 	<!-- <header>
 		
 	</header> -->
 	<div id="hyrja">
-		<form class="hyrje">
-			<input class="nofka" type="text" name="nofka">
-			<input class="dhoma" type="text" name="dhoma">
-			<input class="hyr" type="button" value="Hyr">
-		</form>
+		
+			<div class="form-group hyrja">
+				<input type="text" class="nofka" placeholder="Nofka">
+				<input type="text" class="dhoma" placeholder="Dhoma">
+				<input type="button" class="hyr" value="Hyr">
+			</div>
+	
 	</div>
 	<div id="intermezzo">
-		
 	</div>
 	<div id="loja">
+		<div class="koka">
+			<div class="ora"></div>
+			<div class="fjala"></div>
+		</div>
 		<div id="users">
 			<div class="titull"></div>
 			<ul></ul>
@@ -33,11 +40,12 @@
 			<input type="text" class="msg">
 		</div>
 	</div>
-		
+
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
-	<link rel="stylesheet" href="/bower_components/bootstrap/dist/js/bootstrap.min.js">
+	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="/bower_components/drawingboard.js/dist/drawingboard.min.js"></script>
-	<script src="/func/main.js"></script>	
+	<script src="/func/main.js"></script>
 </body>
+
 </html>

@@ -84,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
       mesazhe.slideUp();
       socket.emit('zgjodha', fjalaZgjedhur);
     });
-
   });
 
   // ju të tjerët prisni se po zgjedh ay
@@ -94,9 +93,19 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // u zgjodh fjala - të gjithëve t'u hiqet perdja e zezë
-  socket.on('word chosen', function () {
+  socket.on('word chosen', function (fjala) {
     mesazhe.slideUp();
     viz.append(vello);
+    var underfjala = '';
+    for(var i=0; i<fjala.length;i++){
+      underfjala+="_ ";
+    }
+    $('.fjala').append(underfjala);
+    socket.emit('fillo countdown');
+  });
+
+  socket.on('cdown', function(sek){
+    $('.ora').empty().append(sek);
   });
 
   // merr nga serveri gjendjen aktuale, laps-gomë-kovë, ngjyrë dhe madhësi maje
@@ -142,6 +151,12 @@ document.addEventListener("DOMContentLoaded", function () {
   // përgjigje nga serveri: mesazh
   socket.on('message', function (user, mesazh) {
     chatMsgs.append('<li class="msgx"><strong>' + user + ':</strong> ' + mesazh + '</li>');
+    chatMsgs.scrollTop(function () { return this.scrollHeight; });
+  });
+
+  //kur e gjen
+  socket.on('guessed', function (user, mesazh) {
+    chatMsgs.append('<li class="msgx" style="color: green"><strong>' + user + '</strong> e gjeti fjalën</li>');
     chatMsgs.scrollTop(function () { return this.scrollHeight; });
   });
 

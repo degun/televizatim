@@ -51,12 +51,10 @@ table {
 
 
 
-
 /* këtu fillon stilimi im */
 
 body{
-	background-image: url('../img/shpi.jpg');
-	background-size: 25%;
+	background-color: #FCF5EB;
 }
 
 header{
@@ -66,29 +64,28 @@ header{
 	filter: blur(40px);
 }
 
-/*form.hyrje{
+#hyrja .hyrja{
+	background-color: #2F8CAB;
 	position: absolute;
-	top: 35%;
-	left: 37%;
-	background-color: white;
-}*/
-
-
-.hyrje input:not(.hyr){
-	display: block;
-	margin: 10px;
-	padding-left: 15px;
-	height: 2em;
-	font-size: 1.3em; 
+	top: 25%;
+	left: 30%;
+	height: 300px;
+	width: 50%;
+	border-radius: 3px;
 }
 
-.hyr{
+.nofka, .dhoma{
+	color: #FE4902;
 	display: block;
-	margin: 10px;
-	height: 1.6em;
-	font-size: 1.3em; 
-	position: relative;
-	left: 38%;
+	width: 90%;
+	font-size: 1.5em;
+	margin: 5%;
+	font-family: 'Calibri Light';
+}
+
+.row{
+	padding: 0;
+	margin: 0;
 }
 
 #intermezzo{
@@ -97,6 +94,12 @@ header{
 
 #loja{
 	display: none;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	
+	-webkit-flex-flow: row wrap;
+	flex-flow: row wrap;
 	justify-content: center;
 }
 
@@ -111,7 +114,7 @@ header{
 #users{
 	width: 150px;
 	height: auto;
-	background-color: #E5FCC2;
+	background-color: #49D0D4;
 	margin-right: 5px;
 	border-radius: 3px;
 }
@@ -125,11 +128,11 @@ li.usr{
 }
 
 li:nth-child(even){
-	background-color: #E5FCC2;
+	background-color: #49D0D4;
 }
 
 li:nth-child(odd){
-	background-color: #F6FFE8;
+	background-color: #6BD2D7;
 }
 
 .titull{
@@ -137,8 +140,7 @@ li:nth-child(odd){
 	padding: 5px;
 	display: block;
 	position: relative;
-	background-color: #45ADA8;
-	vertical-align: middle;
+	background-color: #FE4902;
 	text-align: center;
 	border-bottom: 1px solid #BFC2CF;
 	color: #294F6D;
@@ -148,10 +150,20 @@ li:nth-child(odd){
 	border-radius: 3px;
 }
 
+.koka{
+	height: 70px;
+	width: 100%;
+	background-color: #F4E6CC;
+}
+
+.fjala{
+	margin: 0 auto;
+}
+
 #viz{
 	width: 300px;
 	height: 274px;	
-	background-color: #45ADA8;
+	background-color: #FE4902;
 	border-radius: 3px;
 }
 
@@ -163,7 +175,7 @@ li:nth-child(odd){
 	position: relative;
 	width: 250px;
 	height: 262px;
-	background-color: #E5FCC2;
+	background-color: #49D0D4;
 	margin-left: 5px;
 	padding-bottom: 38px;
 	overflow: auto;

@@ -59,19 +59,18 @@ io.on('connection', function (socket) {
     if (dhomat[socket.room].lojtaret.length !== 1) {
       socket.emit('loadHistory', dhomat[socket.room].curImg);
     }
+    function prisni() {
+      io.sockets.in(socket.room).emit('please wait', sek);
+      sek--;
+      if (sek < 1) {
+        clearInterval(intervali);
+        dhomat[socket.room].curLojtar = dhomat[socket.room].lojtaret[dhomat[socket.room].lojtaret.length - 1];
 
+        io.sockets.in(socket.room).emit('are you the chosen', dhomat[socket.room].curLojtar);
+      }
+    }
     if (dhomat[socket.room].lojtaret.length === 1) {
       var sek = 10;
-      function prisni() {
-        io.sockets.in(socket.room).emit('please wait', sek);
-        sek--;
-        if (sek < 1) {
-          clearInterval(intervali);
-          dhomat[socket.room].curLojtar = dhomat[socket.room].lojtaret[dhomat[socket.room].lojtaret.length - 1];
-
-          io.sockets.in(socket.room).emit('are you the chosen', dhomat[socket.room].curLojtar);
-        }
-      }
       var intervali = setInterval(prisni, 1000);
     }
   });
@@ -99,9 +98,21 @@ io.on('connection', function (socket) {
   });
 
   // vjen fjala e zgjedhur nga i zgjedhuri
-  socket.on('zgjodha', function(fjala){
+  socket.on('zgjodha', function (fjala) {
     dhomat[socket.room].fjala = fjala;
-    socket.broadcast.to(socket.room).emit('word chosen');
+    socket.broadcast.to(socket.room).emit('word chosen', fjala);
+  });
+
+  socket.on('fillo countdown', function(){
+    function cdown() {
+      io.sockets.in(socket.room).emit('cdown', sek);
+      sek--;
+      if (sek < 1) {
+        clearInterval(inter);
+      }
+    }
+    var sek = 60;
+    var inter = setInterval(cdown, 1000);
   });
 
   // dërgoji vetëm atij që e kërkoi
@@ -112,7 +123,11 @@ io.on('connection', function (socket) {
 
   // dërgoju gjithë të tjerëve përveç meje: fillo të vizatosh
   socket.on('chat msg', function (user, msg) {
-    io.in(socket.room).emit('message', user, msg);
+    if(msg == dhomat[socket.room].fjala){
+      io.in(socket.room).emit('guessed', user);
+    }else{
+      io.in(socket.room).emit('message', user, msg);
+    }
   });
 
   // dërgoju gjithë të tjerëve përveç meje: fillo të vizatosh
