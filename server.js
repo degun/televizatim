@@ -20,12 +20,16 @@ var stopped = false;
 
 io.on('connection', function (socket) {
 
-// deklarimi i funksioneve
+  // deklarimi i funksioneve
 
   String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
   };
+
+  String.prototype.replaceAt = function (index, replacement) {
+    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+  }
 
   function perputhet(word) {
     var f = dhomat[socket.room].fjala
@@ -49,12 +53,26 @@ io.on('connection', function (socket) {
     var emrat = dhomat[socket.room].lojtaret.map(function (nofk) { return nofk.nofka; });
     var ix = emrat.indexOf(dhomat[socket.room].curLojtar);
     if (ix === 0) {
-      dhomat[socket.room].curLojtar = dhomat[socket.room].lojtaret[dhomat[socket.room].lojtaret.length - 1].nofka;
-      console.log('u zgjodh lojtari i fundit ' + dhomat[socket.room].curLojtar);
+      if (dhomat[socket.room].curRaund <= dhomat[socket.room].raunde) {
+        io.sockets.in(socket.room).emit('round', dhomat[socket.room].curRaund);
+        dhomat[socket.room].curRaund++;
+        dhomat[socket.room].curLojtar = dhomat[socket.room].lojtaret[dhomat[socket.room].lojtaret.length - 1].nofka;
+        console.log('u zgjodh lojtari i fundit ' + dhomat[socket.room].curLojtar);
+      }else{
+        stopLojes();
+      }
     } else {
       dhomat[socket.room].curLojtar = dhomat[socket.room].lojtaret[--ix].nofka;
       console.log('u zgjodh lojtari pararendes ' + dhomat[socket.room].curLojtar);
     }
+  }
+
+  function zgjidhFituesit(){
+    var renditur = dhomat[socket.room].lojtaret.slice();
+    renditur.sort(function (a, b) {
+      return a.rangu - b.rangu;
+    });
+    return renditur.slice(0,3);
   }
 
   function stopLojes() {
@@ -80,7 +98,7 @@ io.on('connection', function (socket) {
     lojaTani.push({ lojtar: dhomat[socket.room].curLojtar, sekonda: 0, pike: 0 });
     for (var i = 0; i < lojaTani.length; i++) {
       if (lojaTani[i].lojtar == dhomat[socket.room].curLojtar) {
-        lojaTani[i].pike = parseInt((lojaTani.length -1) * 12) + parseInt(lojaTani[0].sekonda);
+        lojaTani[i].pike = parseInt((lojaTani.length - 1) * 12) + parseInt(lojaTani[0].sekonda);
       } else {
         lojaTani[i].pike = parseInt((saLojtare - i) * 10) + parseInt(lojaTani[i].sekonda);
       }
@@ -89,41 +107,85 @@ io.on('connection', function (socket) {
       for (var j = 0; j < lojaTani.length; j++) {
         if (dhomat[socket.room].lojtaret[i].nofka === lojaTani[j].lojtar) {
           dhomat[socket.room].lojtaret[i].pike += lojaTani[j].pike;
-        }else{
+        } else {
           var emratPerPike = lojaTani.map(function (nofk) { return nofk.lojtar; });
           var ix = emratPerPike.indexOf(dhomat[socket.room].lojtaret[i].nofka);
-          if(ix == -1){
+          if (ix == -1) {
             lojaTani.push({ lojtar: dhomat[socket.room].lojtaret[i].nofka, sekonda: 0, pike: 0 });
           }
         }
       }
     }
-    io.sockets.in(socket.room).emit('points', lojaTani, dhomat[socket.room].curLojtar);
+    io.sockets.in(socket.room).emit('points', lojaTani, dhomat[socket.room].curLojtar, dhomat[socket.room].fjala);
+  }
+
+  function renditLojtaret() {
+    var renditur = dhomat[socket.room].lojtaret.slice();
+    renditur.sort(function (a, b) {
+      return a.pike - b.pike;
+    });
+    var rng = 1;
+    renditur[renditur.length - 1].rangu = rng;
+    var pik = renditur[renditur.length - 1].pike;
+    for (i = renditur.length - 2; i >= 0; i--) {
+      if (renditur[i].pike < pik) {
+        rng++;
+        renditur[i].rangu = rng;
+      }
+    }
+    for (i = 0; i < renditur.length; i++) {
+      if (dhomat[socket.room].lojtaret[i].nofka == renditur[i].nofka) {
+        for (j = 0; j < renditur.length; j++) {
+          dhomat[socket.room].lojtaret[i].rangu = renditur[i].rangu;
+        }
+      }
+    }
+  }
+
+  function shtoShkronje(fjala) {
+    var ix = Math.floor(Math.random() * fjala.length);
+    while (dhomat[socket.room].underfjala.charAt(ix) != '_') {
+      ix = Math.floor(Math.random() * fjala.length);
+    }
+    console.log(fjala.charAt(ix));
+    var cnt = 0;
+    for (var i = 0; i < fjala.length; i++) {
+      if (dhomat[socket.room].underfjala.charAt(i) == '_') {
+        cnt++;
+      }
+    }
+    if (cnt > 1) {
+      var undr = dhomat[socket.room].underfjala.replaceAt(ix, fjala.charAt(ix));
+      dhomat[socket.room].underfjala = undr;
+      console.log('u thirr');
+    }
   }
 
   function zeroGjerat() {
     io.sockets.in(socket.room).emit('rstBoard');
     lojaTani = [];
+    dhomat[socket.room].fjala = '';
+    dhomat[socket.room].underfjala = '';
     dhomat[socket.room].curMadhesi = 2;
     dhomat[socket.room].curColor = '#000';
     dhomat[socket.room].curMjet = 'pencil';
     io.sockets.in(socket.room).emit('tools', dhomat[socket.room].curMadhesi, dhomat[socket.room].curColor, dhomat[socket.room].curMjet);
   }
 
-  function dikushHyri(nofke, dhome){
+  function dikushHyri(nofke, dhome) {
     socket.join(dhome);
-      dhomat[socket.room].lojtaret.push({ nofka: socket.username, pike: 0, rangu: 1 });
-      console.log(nofke + ' hyri në ' + dhome);
-      var emrat = dhomat[socket.room].lojtaret.map(function (nofk) { return nofk.nofka; });
-      var piket = dhomat[socket.room].lojtaret.map(function (nofk) { return nofk.pike; });
-      var rangjet = dhomat[socket.room].lojtaret.map(function (nofk) { return nofk.rangu; });
+    dhomat[socket.room].lojtaret.push({ nofka: socket.username, pike: 0, rangu: 1 });
+    console.log(nofke + ' hyri në ' + dhome);
+    var emrat = dhomat[socket.room].lojtaret.map(function (nofk) { return nofk.nofka; });
+    var piket = dhomat[socket.room].lojtaret.map(function (nofk) { return nofk.pike; });
+    var rangjet = dhomat[socket.room].lojtaret.map(function (nofk) { return nofk.rangu; });
 
-      io.sockets.in(socket.room).emit('updatePlayers', emrat, piket, rangjet);
-      socket.broadcast.to(socket.room).emit('in', nofke);
+    io.sockets.in(socket.room).emit('updatePlayers', emrat, piket, rangjet);
+    socket.broadcast.to(socket.room).emit('in', nofke);
 
-      socket.emit('tools', dhomat[socket.room].curMadhesi, dhomat[socket.room].curColor, dhomat[socket.room].curMjet);
+    socket.emit('tools', dhomat[socket.room].curMadhesi, dhomat[socket.room].curColor, dhomat[socket.room].curMjet);
 
-      socket.emit('loadHistory', dhomat[socket.room].curImg);
+    socket.emit('loadHistory', dhomat[socket.room].curImg);
   }
 
   // sapo hyn një user, ruajmë nofkën dhe dhomën etj etj
@@ -140,8 +202,10 @@ io.on('connection', function (socket) {
         curMjet: 'pencil',
         curLojtar: '',
         raunde: 3,
+        curRaund: 1,
         fjale: fjalet,
-        fjala: ''
+        fjala: '',
+        underfjala: ''
       };
       dikushHyri(nofke, dhome);
       socket.emit('start it');
@@ -151,7 +215,7 @@ io.on('connection', function (socket) {
       if (iLojtar == -1) {
         dikushHyri(nofke, dhome);
         socket.emit('please wait');
-      }else{
+      } else {
         socket.emit('user present');
       }
     }
@@ -187,16 +251,16 @@ io.on('connection', function (socket) {
   // vjen fjala e zgjedhur nga i zgjedhuri
   socket.on('zgjodha fjalen', function (fjala) {
     dhomat[socket.room].fjala = fjala;
-    var underfjala = '';
+    dhomat[socket.room].underfjala = '';
     for (var i = 0; i < fjala.length; i++) {
-      underfjala += "_";
+      dhomat[socket.room].underfjala += "_";
     }
-    socket.broadcast.to(socket.room).emit('word chosen', underfjala, dhomat[socket.room].curLojtar);
+    socket.broadcast.to(socket.room).emit('word chosen', dhomat[socket.room].underfjala, dhomat[socket.room].curLojtar);
     socket.emit('word chosen', fjala, dhomat[socket.room].curLojtar);
   });
 
   socket.on('timer', function () {
-    var sekonda = 15;
+    var sekonda = 60;
 
     function cdown() {
       io.sockets.in(socket.room).emit('cdown', sekonda);
@@ -210,21 +274,34 @@ io.on('connection', function (socket) {
         socket.emit('time over', dhomat[socket.room].curLojtar);
       }
     }
-
     var inter = setInterval(cdown, 1000);
+  });
+
+  // çoji një shkronjë tjetër
+  socket.on('sill shkronje', function () {
+    shtoShkronje(dhomat[socket.room].fjala);
+    console.log(dhomat[socket.room].underfjala);
+    socket.broadcast.to(socket.room).emit('add letter', dhomat[socket.room].underfjala, dhomat[socket.room].curLojtar);
   });
 
   // llogarit pikët kur skadon koha
   socket.on('sill piket', function () {
     llogaritPiket();
+    renditLojtaret();
   });
 
   // fillo lojen tjetër
   socket.on('fillo tjetren', function () {
     perditesoLojtaret();
     nderroLojtar();
-    zeroGjerat();
-    nisLojen();
+    if(dhomat[socket.room].curRaund <= dhomat[socket.room].raunde){
+      zeroGjerat();
+      nisLojen();
+    }else{
+      var fituesit = zgjidhFituesit();
+      io.sockets.in(socket.room).emit('winners', fituesit);
+    }
+    
   });
 
   // dërgoji vetëm atij që e kërkoi
@@ -240,6 +317,7 @@ io.on('connection', function (socket) {
       if (lojaTani.length == (dhomat[socket.room].lojtaret.length - 1)) {
         stopLojes();
         llogaritPiket();
+        renditLojtaret();
       }
     } else if (!perputhet(msg) && ekagjetur(user) && user != dhomat[socket.room].curLojtar) {
       io.in(socket.room).emit('writes in vain', user, msg);
@@ -320,13 +398,14 @@ io.on('connection', function (socket) {
       console.log(socket.username + ' doli nga ' + socket.room);
       socket.broadcast.to(socket.room).emit('out', socket.username);
       socket.broadcast.to(socket.room).emit('updatePlayers', dhomat[socket.room]);
-      if (dhomat[socket.room].lojtaret.length === 0) {
-        delete dhomat[socket.room];
-      }
-      if(socket.username == dhomat[socket.room].curLojtar){
+      if (socket.username == dhomat[socket.room].curLojtar) {
         dhomat[socket.room].curLojtar = dhomat[socket.room].lojtaret[0].nofka;
         stopLojes();
         llogaritPiket();
+        renditLojtaret();
+      }
+      if (dhomat[socket.room].lojtaret.length === 0) {
+        delete dhomat[socket.room];
       }
     }
   });

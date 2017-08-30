@@ -15,9 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
   var viz = $('#viz');
   var navi = $('.drawing-board-control-navigation>button:nth-child(1)');
   navi.removeClass('drawing-board-control-navigation-reset');
-  mjeti.on('click', function(){this.unbind('board:mode');});
+  mjeti.on('click', function () { this.unbind('board:mode'); });
 
-  var nofka;
+  var nofka, curLojtar;
   var chatMsgs = $('#chat ul');
   var chatMsg = $('#chat ul li');
   var vello = $("<div id='vello'></div>");
@@ -66,10 +66,10 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // nuk lejohen lojtarë me të njëjtin emër
-  socket.on('user present', function(){
+  socket.on('user present', function () {
     alert('e kemi një lojtar me atë emër');
-     $('#loja').hide();
-     $('#hyrja').show();
+    $('#loja').hide();
+    $('#hyrja').show();
   });
 
   // i bën apel adminit të fillojë lojën
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     mesazhe.slideDown();
     mesazhe.html('');
     mesazhe.append('<button id="nise" value="Nise">Nise</button>');
-    $('#nise').on('click', function(){
+    $('#nise').on('click', function () {
       socket.emit('ok fillojme');
     });
   });
@@ -91,7 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // zgjidhet lojtari aktual. pyeten të gjithë: a je ti? ai që është dërgon mesazh pozitiv
   socket.on('are you the chosen', function (lojtar) {
-    console.log(lojtar);
     if (nofka == lojtar) {
       socket.emit('i zgjedhuri', lojtar);
     }
@@ -99,15 +98,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ti i zgjedhuri zgjidh fjalën
   socket.on('choose word', function (f1, f2, f3) {
-    console.log(f1, f2, f3);
     var fjalaZgjedhur;
     mesazhe.html('');
     mesazhe.append('<button value="' + f1 + '">' + f1 + '</button><button value="' + f2 + '">' + f2 + '</button><button value="' + f3 + '">' + f3 + '</button>');
+    var zgjidh = setTimeout(zgjidhAutom, 10000);
+    function zgjidhAutom() {
+      var arr = []; arr.push(f1); arr.push(f2); arr.push(f3);
+      fjalaZgjedhur = arr[Math.floor(Math.random() * arr.length)];
+      mesazhe.slideUp();
+      vello.slideUp();
+      socket.emit('zgjodha fjalen', fjalaZgjedhur);
+    }
     $('button').on('click', function () {
       fjalaZgjedhur = $(this).val();
       mesazhe.slideUp();
       vello.slideUp();
       socket.emit('zgjodha fjalen', fjalaZgjedhur);
+      clearTimeout(zgjidh);
     });
   });
 
@@ -120,16 +127,30 @@ document.addEventListener("DOMContentLoaded", function () {
   // u zgjodh fjala - të gjithëve t'u hiqet perdja e zezë
   socket.on('word chosen', function (underfjala, poVizaton) {
     mesazhe.slideUp();
-    if(nofka != poVizaton){
+    curLojtar = poVizaton;
+    if (nofka != curLojtar) {
       vello.slideDown();
+    }else{
+      socket.emit('timer');
     }
-    $('.fjala').append(underfjala.toUpperCase()); 
-    socket.emit('timer');
+    $('.fjala').empty().append(underfjala.toUpperCase());
+  });
+
+  // shto një shkronjë te fjala
+  socket.on('add letter', function (underfjala, poVizaton) {
+    if (nofka != poVizaton) {
+      $('.fjala').empty().append(underfjala.toUpperCase());
+    }
   });
 
   // fillon gjetja e fjalës - ke 60 sekonda kohë
   socket.on('cdown', function (sekonda) {
     $('.ora').empty().append(sekonda);
+    if(nofka === curLojtar){
+      if((sekonda+5)%10 === 0 && sekonda < 55){
+        socket.emit('sill shkronje');
+      }
+    }
   });
 
   socket.on('stop the game', function (sekonda) {
@@ -141,22 +162,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // u zgjodh fjala - të gjithëve t'u hiqet perdja e zezë
   socket.on('time over', function (poVizaton) {
-    if(nofka == poVizaton){
+    if (nofka == poVizaton) {
       socket.emit('sill piket');
     }
   });
 
-  socket.on('points', function (loja, dukeVizatuar) {
+  socket.on('points', function (loja, dukeVizatuar, fjala) {
+    var kushishtefjala = '<h2 style="color: white">Fjala ishte: ' + fjala + '</h2><br>';
     var lista = '<ul>';
-    for(var i=0;i<loja.length;i++){
-      lista+= '<li>'+loja[i].lojtar+ ': '+loja[i].pike+'</li>'
+    for (var i = 0; i < loja.length; i++) {
+      lista += '<li>' + loja[i].lojtar + ': ' + loja[i].pike + '</li>'
     }
-    lista+='</ul>';
-    var afishePikesh = $(lista);
-    mesazhe.append(afishePikesh);
-    if(dukeVizatuar === nofka){
-      setTimeout(function(){socket.emit('fillo tjetren');}, 5000);
+    lista += '</ul>';
+    mesazhe.append(kushishtefjala);
+    mesazhe.append($(lista));
+    if (dukeVizatuar === nofka) {
+      setTimeout(function () { socket.emit('fillo tjetren'); }, 5000);
     }
+  });
+
+  socket.on('winners', function (fituesit) {
+    var lista = '<ul>';
+    for (var i = 0; i < fituesit.length; i++) {
+      lista += '<li>' + fituesit[i].nofka + ': ' + fituesit[i].pike + '</li>'
+    }
+    lista += '</ul>';
+    mesazhe.empty().append($(lista));
   });
 
   // merr nga serveri gjendjen aktuale, laps-gomë-kovë, ngjyrë dhe madhësi maje
@@ -212,9 +243,9 @@ document.addEventListener("DOMContentLoaded", function () {
     chatMsgs.scrollTop(function () { return this.scrollHeight; });
   });
 
-   //kur shkruan pasi e ka gjetur
+  //kur shkruan pasi e ka gjetur
   socket.on('writes in vain', function (user, mesazh) {
-    chatMsgs.append('<li class="msgx" style="color: green"><strong>' + user + ':</strong> ' + mesazh +'</li>');
+    chatMsgs.append('<li class="msgx" style="color: green"><strong>' + user + ':</strong> ' + mesazh + '</li>');
     chatMsgs.scrollTop(function () { return this.scrollHeight; });
   });
 
