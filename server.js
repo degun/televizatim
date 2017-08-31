@@ -32,9 +32,9 @@ io.on('connection', function (socket) {
   }
 
   function perputhet(word) {
-    var f = dhomat[socket.room].fjala.replaceAll('ë', 'e').replaceAll('ç', 'c').toUpperCase;
-    var w = word.replaceAll('ë', 'e').replaceAll('ç', 'c').toUpperCase;
-    return word == f;
+    var f = dhomat[socket.room].fjala.replaceAll('ë', 'e').replaceAll('ç', 'c').toUpperCase().trim();
+    var w = word.replaceAll('ë', 'e').replaceAll('ç', 'c').toUpperCase().trim();
+    return (w === f);
   }
 
   function ekagjetur(user) {
@@ -156,7 +156,6 @@ io.on('connection', function (socket) {
     if (cnt > 1) {
       var undr = dhomat[socket.room].underfjala.replaceAt(ix, fjala.charAt(ix));
       dhomat[socket.room].underfjala = undr;
-      console.log('u thirr');
     }
   }
 
