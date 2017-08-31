@@ -32,10 +32,9 @@ io.on('connection', function (socket) {
   }
 
   function perputhet(word) {
-    var f = dhomat[socket.room].fjala
-    if (word == f || word == f.toUpperCase() || word == f.replaceAll('ë', 'e').replaceAll('ç', 'c') || word == f.replaceAll('ë', 'e').replaceAll('ç', 'c').toUpperCase()) {
-      return true;
-    } else { return false };
+    var f = dhomat[socket.room].fjala.replaceAll('ë', 'e').replaceAll('ç', 'c').toUpperCase;
+    var w = word.replaceAll('ë', 'e').replaceAll('ç', 'c').toUpperCase;
+    return word == f;
   }
 
   function ekagjetur(user) {
