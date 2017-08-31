@@ -387,6 +387,14 @@ io.on('connection', function (socket) {
     if (Object.keys(dhomat).length !== 0) {
       var emrat = dhomat[socket.room].lojtaret.map(function (nofk) { return nofk.nofka; });
       var index = emrat.indexOf(socket.username);
+      if (socket.username == dhomat[socket.room].curLojtar) {
+        console.log(dhomat[socket.room].lojtaret);
+        dhomat[socket.room].curLojtar = dhomat[socket.room].lojtaret[0].nofka;
+        stopLojes();
+        llogaritPiket();
+        renditLojtaret();
+      }
+
       dhomat[socket.room].lojtaret.splice(index, 1);
 
       var gjetesit = lojaTani.map(function (gjetes) { return gjetes.lojtar; });
@@ -398,12 +406,7 @@ io.on('connection', function (socket) {
       console.log(socket.username + ' doli nga ' + socket.room);
       socket.broadcast.to(socket.room).emit('out', socket.username);
       socket.broadcast.to(socket.room).emit('updatePlayers', dhomat[socket.room]);
-      if (socket.username == dhomat[socket.room].curLojtar) {
-        dhomat[socket.room].curLojtar = dhomat[socket.room].lojtaret[0].nofka;
-        stopLojes();
-        llogaritPiket();
-        renditLojtaret();
-      }
+  
       if (dhomat[socket.room].lojtaret.length === 0) {
         delete dhomat[socket.room];
       }
