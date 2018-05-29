@@ -1,53 +1,51 @@
-/* reset */
-	
-	/* http://meyerweb.com/eric/tools/css/reset/ 
-	v2.0 | 20110126
-	License: none (public domain)
-	*/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
 
-	html, body, div, span, applet, object, iframe,
-	h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-	a, abbr, acronym, address, big, cite, code,
-	del, dfn, em, img, ins, kbd, q, s, samp,
-	small, strike, strong, sub, sup, tt, var,
-	b, u, i, center,
-	dl, dt, dd, ol, ul, li,
-	fieldset, form, label, legend,
-	table, caption, tbody, tfoot, thead, tr, th, td,
-	article, aside, canvas, details, embed, 
-	figure, figcaption, footer, header, hgroup, 
-	menu, nav, output, ruby, section, summary,
-	time, mark, audio, video {
-		margin: 0;
-		padding: 0;
-		border: 0;
-		font-size: 100%;
-		font: inherit;
-		vertical-align: baseline;
-	}
-	/* HTML5 display-role reset for older browsers */
-	article, aside, details, figcaption, figure, 
-	footer, header, hgroup, menu, nav, section {
-		display: block;
-	}
-	body {
-		line-height: 1;
-	}
-	ol, ul {
-		list-style: none;
-	}
-	blockquote, q {
-		quotes: none;
-	}
-	blockquote:before, blockquote:after,
-	q:before, q:after {
-		content: '';
-		content: none;
-	}
-	table {
-		border-collapse: collapse;
-		border-spacing: 0;
-	}
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
 
 
 
@@ -55,171 +53,163 @@
 
 /* këtu fillon stilimi im */
 
-	body{
-		background-color: #FCF5EB;
-	}
+body{
+	background-color: #FCF5EB;
+}
 
-	header{
-		height: 100px;
-		margin-bottom: 5px;
-		background-color: rgba(255,255,255,0);
-		filter: blur(40px);
-	}
+header{
+	height: 100px;
+	margin-bottom: 5px;
+	background-color: rgba(255,255,255,0);
+	filter: blur(40px);
+}
 
-	#hyrja .hyrja{
-		background-color: #2F8CAB;
-		top: 50%;
-		left: 45%;
-		height: 200px;
-		width: 30%;
-		width: 50%;
-	}
+#hyrja .hyrja{
+	background-color: #2F8CAB;
+	position: absolute;
+	top: 25%;
+	left: 30%;
+	height: 300px;
+	width: 50%;
+	border-radius: 3px;
+}
 
-	.hyr{
-		opacity: 0;
-	}
+.nofka, .dhoma{
+	color: #FE4902;
+	display: block;
+	width: 90%;
+	font-size: 1.5em;
+	margin: 5%;
+	font-family: 'Calibri Light';
+}
 
-	.nofka, .dhoma{
-		color: #FE4902;
-		display: block;
-		width: 90%;
-		font-size: 1.5em;
-		margin: 5%;
-		font-family: 'Calibri Light';
-		opacity: 0;
-	}
+.row{
+	padding: 0;
+	margin: 0;
+}
 
-	.row{
-		padding: 0;
-		margin: 0;
-	}
+#intermezzo{
+	display: none;
+}
 
-	#intermezzo{
-		display: none;
-	}
+#loja{
+	display: none;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	
+	-webkit-flex-flow: row wrap;
+	flex-flow: row wrap;
+	justify-content: center;
+}
 
-	#loja{
-		display: none;
-		padding: 0;
-		margin: 0;
-		list-style: none;
-		
-		-webkit-flex-flow: row wrap;
-		flex-flow: row wrap;
-		justify-content: center;
-	}
+#mesazhe button{
+	position: relative;
+	top: 47%;
+	margin: 5px;
+	width: auto;
+	height: 20px;
+}
 
-	#mesazhe button{
-		position: relative;
-		top: 47%;
-		margin: 5px;
-		width: auto;
-		height: 20px;
-	}
+#users{
+	width: 150px;
+	height: auto;
+	background-color: #49D0D4;
+	margin-right: 5px;
+	border-radius: 3px;
+}
 
-	#users{
-		width: 150px;
-		height: auto;
-		background-color: #49D0D4;
-		margin-right: 5px;
-		border-radius: 3px;
-	}
+li.usr{
+	height: 2em;
+	font-family: Arial, sans-serif;
+	padding: 10px;
+	font-size: 1.3em;
+	color: #294F6D;
+}
 
-	li.usr{
-		height: 2em;
-		font-family: Arial, sans-serif;
-		padding: 10px;
-		font-size: 1.3em;
-		color: #294F6D;
-	}
+li:nth-child(even){
+	background-color: #49D0D4;
+}
 
-	li:nth-child(even){
-		background-color: #49D0D4;
-	}
+li:nth-child(odd){
+	background-color: #6BD2D7;
+}
 
-	li:nth-child(odd){
-		background-color: #6BD2D7;
-	}
+.titull{
+	height: 28px;
+	padding: 5px;
+	display: block;
+	position: relative;
+	background-color: #FE4902;
+	text-align: center;
+	border-bottom: 1px solid #BFC2CF;
+	color: #294F6D;
+	font-family: Arial, sans-serif;
+	font-size: 1.2em;
+	z-index: 10;
+	border-radius: 3px;
+}
 
-	.titull{
-		height: 28px;
-		padding: 5px;
-		display: block;
-		position: relative;
-		background-color: #FE4902;
-		text-align: center;
-		border-bottom: 1px solid #BFC2CF;
-		color: #294F6D;
-		font-family: Arial, sans-serif;
-		font-size: 1.2em;
-		z-index: 10;
-		border-radius: 3px;
-	}
+.koka{
+	height: 70px;
+	width: 100%;
+	background-color: #F4E6CC;
+}
 
-	.koka{
-		height: 70px;
-		width: 100%;
-		background-color: #F4E6CC;
-		text-align: center;
-	}
+.fjala{
+	margin: 0 auto;
+}
 
-	.fjala{
-		display: block;
-		margin: 0 auto;
-		font-size: 1.5em;
-		letter-spacing: 0.2em;
-	}
+#viz{
+	width: 300px;
+	height: 274px;	
+	background-color: #FE4902;
+	border-radius: 3px;
+}
 
-	#viz{
-		width: 300px;
-		height: 274px;	
-		background-color: #FE4902;
-		border-radius: 3px;
-	}
+.drawing-board-controls{
+	padding: 6px 0 0 5px;
+}
 
-	.drawing-board-controls{
-		padding: 6px 0 0 5px;
-	}
+#chat{
+	position: relative;
+	width: 250px;
+	height: 262px;
+	background-color: #49D0D4;
+	margin-left: 5px;
+	padding-bottom: 38px;
+	overflow: auto;
+}
 
-	#chat{
-		position: relative;
-		width: 250px;
-		height: 262px;
-		background-color: #49D0D4;
-		margin-left: 5px;
-		padding-bottom: 38px;
-		overflow: auto;
-	}
-
-	li.msgx{
-		padding: 5px;
-		font-family: Arial, sans-serif;
-		font-size: 1em;
-		color: #294F6D;
-		height: 20px;
-	}
+li.msgx{
+	padding: 5px;
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+	color: #294F6D;
+	height: 20px;
+}
 
 
-	li.msgx strong{
-		font-weight: 600;
-	}
+li.msgx strong{
+	font-weight: 600;
+}
 
-	input.msg{
-		position: absolute;
-		height: 38px;
-		width: 245px;
-		font-size: 1.3em;
-		bottom: 0;
-	}
+input.msg{
+	position: absolute;
+	height: 38px;
+	width: 245px;
+	font-size: 1.3em;
+	bottom: 0;
+}
 
-	#chat ul{
-		position: absolute;
-		bottom: 43px;
-		width: 100%;
-		overflow-y: auto;
-		max-height: 217px;
-		border-radius: 3px;
-	}
+#chat ul{
+	position: absolute;
+	bottom: 43px;
+	width: 100%;
+	overflow-y: auto;
+	max-height: 217px;
+	border-radius: 3px;
+}
 
 
 

@@ -12,6 +12,7 @@ app.get('/', function (req, res) {
 
 var dhomat = {};
 
+<<<<<<< HEAD
 var lojaTani = [];
 
 var fjalet = ['farmaci', 'doktor', 'ilaç', 'ushtar', 'pirat', 'burg', 'biçikletë', 'libër', 'vesh', 'sy', 'kalorës', 'pushkë', 'çifte', 'top', 'shkencë', 'gjysh', 'fantazmë', 'ambulancë', 'pantallona', 'fabrikë', 'shef', 'oxhak', 'lot', 'qafë', 'rrotë', 'qen', 'mace', 'kalë', 'derr', 'gjel', 'hajdut', 'shkallë', 'fshat', 'shtizë', 'pistoletë', 'çerek', 'mish', 'lopë', 'dhi', 'dele', 'qepë', 'karotë', 'mollë', 'dardhë', 'fik', 'rrush', 'portokall', 'bonsai', 'byrek', 'banane', 'shtëpi', 'natë', 'ditë', 'diamant', 'rubin', 'mbret', 'mbretëreshë', 'princ', 'varr', 'berber', 'marangoz', 'hidraulik', 'elektricist', 'këpucë', 'çizme', 'bluzë', 'jastëk', 'maskë', 'përparëse', 'benz', 'makinë', 'kamion', 'triçikël', 'plazh', 'varkë', 'perëndim', 'peshk', 'peshkaqen', 'peshkatar', 'birrë', 'koktejl', 'kafe', 'kasolle', 'portë', 'kufi', 'çadër', 'manikyr', 'dorë', 'tatuazh', 'abazhur', 'llambë', 'biskotë', 'qumësht', 'lavatriçe', 'televizor', 'qeros', 'zile', 'valixhe', 'piano', 'kitarë', 'çifteli', 'fizarmonikë', 'mikrofon', 'bilbil', 'shah', 'bateri', 'violinë', 'pulovër', 'shapka', 'rrip', 'kapele', 'pazar', 'gomar', 'lulëkuqe', 'luledielli', 'luledele', 'tërfil', 'vrasës', 'batman', 'superman', 'spiderman', 'shalqi', 'pjeshkë', 'shtrigë', 'magjistar', 'dem', 'eksperiment', 'parfum', 'lupë', 'gërshet', 'gërshërë', 'kopsë', 'çakmak', 'alien', 'planet', 'yll', 'nishan', 'stacion', 'hëna', 'krëhër', 'dollap', 'muzikë', 'bisedë', 'para', 'vetulla', 'mustaqe', 'mustardë', 'xhep', 'xhuxh', 'peshore', 'luan', 'akrep', 'gjarpër', 'ciklop', 'binjakë', 'balonë', 'shpellë', 'pyll', 'gadishull', 'ishull', 'taksi', 'shi', 'vetëtimë', 'lugë', 'pirun', 'cfurk', 'rrudha', 'baluke', 'qofte', 'stol', 'karrige', 'kolltuk', 'krevat', 'trotuar', 'ëndërr', 'qyp', 'akullore', 'limonatë', 'pica', 'domate', 'spec', 'provim', 'Trump', 'dinamit', 'çantë', 'çokollatë', 'mur', 'kilometër', 'karburant', 'karkalec', 'sandale', 'laps', 'kamp', 'kek', 'tortë', 'gotë', 'verë', 'çekiç', 'pinca', 'kaçavidë', 'bukë', 'parking', 'midhje', 'oktapod', 'flori', 'universitet', 'projektor', 'rrugë', 'basketboll', 'futboll', 'tenis', 'golf', 'bilardo', 'volejboll', 'këngëtar', 'nuse', 'dhëndër', 'granatë', 'snajper', 'kthesë', 'pallat', 'shkollë', 'aeroplan', 'nëndetëse', 'helikopter', 'anije', 'bretkosë', 're', 'sharrë', 'trapan', 'dritare', 'derë', 'dorezë', 'poker'];
@@ -190,12 +191,26 @@ io.on('connection', function (socket) {
 
   socket.emit('rooms', Object.keys(dhomat));
 
+=======
+var fjalet = ['farmaci', 'doktor', 'ilaç', 'ushtar', 'pirat', 'burg', 'biçikletë', 'libër', 'vesh', 'sy', 'kalorës', 'pushkë', 'çifte', 'top', 'shkencë', 'gjysh', 'fantazmë', 'ambulancë', 'pantallona', 'fabrikë', 'shef', 'oxhak', 'lot', 'qafë', 'rrotë', 'qen', 'mace', 'kalë', 'derr', 'gjel', 'hajdut', 'shkallë', 'fshat', 'shtizë', 'pistoletë', 'çerek', 'mish', 'lopë', 'dhi', 'dele', 'qepë', 'karotë', 'mollë', 'dardhë', 'fik', 'rrush', 'portokall', 'bonsai', 'byrek', 'banane', 'shtëpi', 'natë', 'ditë', 'diamant', 'rubin', 'mbret', 'mbretëreshë', 'princ', 'varr', 'berber', 'marangoz', 'hidraulik', 'elektricist', 'këpucë', 'çizme', 'bluzë', 'jastëk', 'maskë', 'përparëse', 'benz', 'makinë', 'kamion', 'triçikël', 'plazh', 'varkë', 'perëndim', 'peshk', 'peshkaqen', 'peshkatar', 'birrë', 'koktejl', 'kafe', 'kasolle', 'portë', 'kufi', 'çadër', 'manikyr', 'dorë', 'tatuazh', 'abazhur', 'llambë', 'biskotë', 'qumësht', 'lavatriçe', 'televizor', 'qeros', 'zile', 'valixhe', 'piano', 'kitarë', 'çifteli', 'fizarmonikë', 'mikrofon', 'bilbil', 'shah', 'bateri', 'violinë', 'pulovër', 'shapka', 'rrip', 'kapele', 'pazar', 'gomar', 'lulëkuqe', 'luledielli', 'luledele', 'tërfil', 'vrasës', 'batman', 'superman', 'spiderman', 'shalqi', 'pjeshkë', 'shtrigë', 'magjistar', 'dem', 'eksperiment', 'parfum', 'lupë', 'gërshet', 'gërshërë', 'kopsë', 'çakmak', 'alen', 'planet', 'yll', 'nishan', 'stacion', 'hëna', 'krëhër', 'dollap', 'muzikë', 'bisedë', 'para', 'vetulla', 'mustaqe', 'mustardë', 'xhep', 'xhuxh', 'peshore', 'luan', 'akrep', 'gjarpër', 'ciklop', 'binjakë', 'balonë', 'shpellë', 'pyll', 'gadishull', 'ishull', 'taksi', 'shi', 'vetëtimë', 'lugë', 'pirun', 'cfurk', 'rrudha', 'baluke', 'qofte', 'stol', 'karrige', 'kolltuk', 'krevat', 'trotuar', 'ëndërr', 'qyp', 'akullore', 'limonatë', 'pica', 'domate', 'spec', 'provim', 'Trump', 'dinamit', 'çantë', 'çokollatë', 'mur', 'kilometër', 'karburant', 'karkalec', 'sandale', 'laps', 'kamp', 'kek', 'tortë', 'gotë', 'verë', 'çekiç', 'pinca', 'kaçavidë', 'bukë', 'parking', 'midhje', 'oktapod', 'flori', 'universitet', 'projektor', 'rrugë', 'basketboll', 'futboll', 'tenis', 'golf', 'bilardo', 'volejboll', 'këngëtar', 'nuse', 'dhëndër', 'granatë', 'snajper', 'kthesë', 'pallat', 'shkollë', 'aeroplan', 'nëndetëse', 'helikopter', 'anije', 'bretkosë', 're', 'sharrë', 'trapan', 'dritare', 'derë', 'dorezë', 'poker'];
+
+io.on('connection', function (socket) {
+
+>>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
   // sapo hyn një user, ruajmë nofkën dhe dhomën etj etj
   socket.on('hyri', function (nofke, dhome) {
     socket.username = nofke;
     socket.room = dhome;
+<<<<<<< HEAD
 
     if (!(socket.room in dhomat)) {
+=======
+    socket.join(dhome);
+
+    if (socket.room in dhomat) {
+      dhomat[socket.room].lojtaret.push({ nofka: socket.username, pike: 0, rangu: 1 });
+    } else {
+>>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
       dhomat[socket.room] = {
         lojtaret: [],
         curImg: '',
@@ -204,6 +219,7 @@ io.on('connection', function (socket) {
         curMjet: 'pencil',
         curLojtar: '',
         raunde: 3,
+<<<<<<< HEAD
         curRaund: 1,
         fjale: fjalet,
         fjala: '',
@@ -228,6 +244,50 @@ io.on('connection', function (socket) {
     io.sockets.in(socket.room).emit('are you the chosen', dhomat[socket.room].curLojtar);
   })
 
+=======
+        fjale: fjalet,
+        fjala: ''
+      };
+      dhomat[socket.room].lojtaret.push({ nofka: socket.username, pike: 0, rangu: 1 });
+    }
+    console.log(nofke + ' hyri në ' + dhome);
+    var emrat = dhomat[socket.room].lojtaret.map(function (nofk) {
+      return nofk.nofka;
+    });
+
+    var piket = dhomat[socket.room].lojtaret.map(function (nofk) {
+      return nofk.pike;
+    });
+
+    var rangjet = dhomat[socket.room].lojtaret.map(function (nofk) {
+      return nofk.rangu;
+    });
+
+    io.sockets.in(socket.room).emit('updatePlayers', emrat, piket, rangjet);
+    socket.broadcast.to(socket.room).emit('in', nofke);
+
+    socket.emit('tools', dhomat[socket.room].curMadhesi, dhomat[socket.room].curColor, dhomat[socket.room].curMjet);
+
+    if (dhomat[socket.room].lojtaret.length !== 1) {
+      socket.emit('loadHistory', dhomat[socket.room].curImg);
+    }
+    function prisni() {
+      io.sockets.in(socket.room).emit('please wait', sek);
+      sek--;
+      if (sek < 1) {
+        clearInterval(intervali);
+        dhomat[socket.room].curLojtar = dhomat[socket.room].lojtaret[dhomat[socket.room].lojtaret.length - 1];
+
+        io.sockets.in(socket.room).emit('are you the chosen', dhomat[socket.room].curLojtar);
+      }
+    }
+    if (dhomat[socket.room].lojtaret.length === 1) {
+      var sek = 10;
+      var intervali = setInterval(prisni, 1000);
+    }
+  });
+
+>>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
   // i zgjedhuri dërgon mesazh
   socket.on('i zgjedhuri', function (nofka) {
 
@@ -245,12 +305,17 @@ io.on('connection', function (socket) {
 
     socket.emit('choose word', fjala1, fjala2, fjala3);
 
+<<<<<<< HEAD
     dhomat[socket.room].curLojtar = nofka;
+=======
+    dhomat[socket.room].lojtaret.curLojtar = nofka;
+>>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
 
     socket.broadcast.to(socket.room).emit('is choosing', nofka);
   });
 
   // vjen fjala e zgjedhur nga i zgjedhuri
+<<<<<<< HEAD
   socket.on('zgjodha fjalen', function (fjala) {
     dhomat[socket.room].fjala = fjala;
     dhomat[socket.room].underfjala = '';
@@ -324,6 +389,36 @@ io.on('connection', function (socket) {
     } else if (!perputhet(msg) && ekagjetur(user) && user != dhomat[socket.room].curLojtar) {
       io.in(socket.room).emit('writes in vain', user, msg);
     } else if (!perputhet(msg) && !ekagjetur(user)) {
+=======
+  socket.on('zgjodha', function (fjala) {
+    dhomat[socket.room].fjala = fjala;
+    socket.broadcast.to(socket.room).emit('word chosen', fjala);
+  });
+
+  socket.on('fillo countdown', function(){
+    function cdown() {
+      io.sockets.in(socket.room).emit('cdown', sek);
+      sek--;
+      if (sek < 1) {
+        clearInterval(inter);
+      }
+    }
+    var sek = 60;
+    var inter = setInterval(cdown, 1000);
+  });
+
+  // dërgoji vetëm atij që e kërkoi
+  socket.on('imazhiTani', function () {
+    socket.broadcast.to(socket.room).emit('is choosing', dhomat[socket.room].lojtaret.curLojtar);
+    socket.emit('loadHistory', dhomat[socket.room].curImg);
+  });
+
+  // dërgoju gjithë të tjerëve përveç meje: fillo të vizatosh
+  socket.on('chat msg', function (user, msg) {
+    if(msg == dhomat[socket.room].fjala){
+      io.in(socket.room).emit('guessed', user);
+    }else{
+>>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
       io.in(socket.room).emit('message', user, msg);
     }
   });
@@ -370,7 +465,11 @@ io.on('connection', function (socket) {
 
   // dërgoju gjithë të tjerëve përveç meje: fshi komplet
   socket.on('fshi', function () {
+<<<<<<< HEAD
     socket.broadcast.to(socket.room).emit('rstBoard');
+=======
+    socket.broadcast.to(socket.room).emit('resetBoard');
+>>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
   });
 
   // dërgoju gjithë të tjerëve përveç meje: fshi komplet
@@ -386,6 +485,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function () {
+<<<<<<< HEAD
     if (Object.keys(dhomat).length !== 0) {
       var emrat = dhomat[socket.room].lojtaret.map(function (nofk) { return nofk.nofka; });
       var index = emrat.indexOf(socket.username);
@@ -413,6 +513,20 @@ io.on('connection', function (socket) {
         delete dhomat[socket.room];
       }
     }
+=======
+    if (dhomat[socket.room] !== undefined) {
+      var index = dhomat[socket.room].lojtaret.indexOf(socket.username);
+      dhomat[socket.room].lojtaret.splice(index, 1);
+    }
+
+    if (dhomat[socket.room].lojtaret.length === 0 && socket.room !== undefined) {
+      delete dhomat[socket.room];
+    }
+
+    console.log(socket.username + ' doli nga ' + socket.room);
+    socket.broadcast.to(socket.room).emit('out', socket.username);
+    socket.broadcast.to(socket.room).emit('updatePlayers', dhomat[socket.room]);
+>>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
   });
 
 });
