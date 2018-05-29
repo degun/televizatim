@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document_hidden = document[hidden];
     }
   });
+
   // kur shtyp butonin hyr
   $('.hyr').on('click', function () {
     nofka = $('.nofka').val();
