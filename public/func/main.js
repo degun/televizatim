@@ -15,25 +15,15 @@ document.addEventListener("DOMContentLoaded", function () {
   var viz = $('#viz');
   var navi = $('.drawing-board-control-navigation>button:nth-child(1)');
   navi.removeClass('drawing-board-control-navigation-reset');
-<<<<<<< HEAD
   mjeti.on('click', function () { this.unbind('board:mode'); });
 
   var nofka, curLojtar;
-=======
-
-  var nofka;
->>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
   var chatMsgs = $('#chat ul');
   var chatMsg = $('#chat ul li');
   var vello = $("<div id='vello'></div>");
   var mesazhe = $("<div id='mesazhe'></div>");
-<<<<<<< HEAD
   vello.css({ position: 'absolute', height: viz.height() + 32 + 'px', width: '100%', backgroundColor: 'rgba(0,0,0,0)', top: 0, left: 0, zIndex: 119 });
   mesazhe.css({ position: 'absolute', height: viz.height() + 32 + 'px', width: '100%', backgroundColor: 'rgba(0,0,0,0.6)', top: 0, left: 0, zIndex: 120, display: 'flex', justifyContent: 'center' });
-=======
-  vello.css({ position: 'absolute', height: viz.height() + 32 + 'px', width: '100%', backgroundColor: 'rgba(0,0,0,0)', top: 0, left: 0, zIndex: 120 });
-  mesazhe.css({ position: 'absolute', height: viz.height() + 32 + 'px', width: '100%', backgroundColor: 'rgba(0,0,0,0.6)', top: 0, left: 0, zIndex: 119, display: 'flex', justifyContent: 'center' });
->>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
 
   var socket = io.connect();
 
@@ -59,10 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
       document_hidden = document[hidden];
     }
   });
-<<<<<<< HEAD
-
-=======
->>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
   // kur shtyp butonin hyr
   $('.hyr').on('click', function () {
     nofka = $('.nofka').val();
@@ -72,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
     vizatim.history.stack = [];
     socket.emit('hyri', nofka, dhoma);
     $('#hyrja').hide();
-<<<<<<< HEAD
     viz.append(vello);
     vello.slideUp(0);
     viz.append(mesazhe);
@@ -102,27 +87,12 @@ document.addEventListener("DOMContentLoaded", function () {
     mesazhe.slideDown();
     mesazhe.html('');
     mesazhe.append('<h2 style="color: white; position: relative; top: 48%">Ju lutem prisni.</h2>');
-=======
-    $('#loja').css({ display: 'flex' });
-  });
-
-  // pritet sa të mblidhen gjithë lojtarët
-  socket.on('please wait', function (sek) {
-    viz.append(mesazhe);
-    mesazhe.html('');
-    mesazhe.append('<h2 style="color: white; position: relative; top: 48%">Ju lutem prisni ' + sek + ' sekonda</h2>');
->>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
   });
 
   // zgjidhet lojtari aktual. pyeten të gjithë: a je ti? ai që është dërgon mesazh pozitiv
   socket.on('are you the chosen', function (lojtar) {
-<<<<<<< HEAD
     if (nofka == lojtar) {
       socket.emit('i zgjedhuri', lojtar);
-=======
-    if (nofka == lojtar.nofka) {
-      socket.emit('i zgjedhuri', lojtar.nofka);
->>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
     }
   });
 
@@ -131,7 +101,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var fjalaZgjedhur;
     mesazhe.html('');
     mesazhe.append('<button value="' + f1 + '">' + f1 + '</button><button value="' + f2 + '">' + f2 + '</button><button value="' + f3 + '">' + f3 + '</button>');
-<<<<<<< HEAD
     var zgjidh = setTimeout(zgjidhAutom, 10000);
     function zgjidhAutom() {
       var arr = []; arr.push(f1); arr.push(f2); arr.push(f3);
@@ -146,12 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
       vello.slideUp();
       socket.emit('zgjodha fjalen', fjalaZgjedhur);
       clearTimeout(zgjidh);
-=======
-    $('button').on('click', function(){
-      fjalaZgjedhur = $(this).val();
-      mesazhe.slideUp();
-      socket.emit('zgjodha', fjalaZgjedhur);
->>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
     });
   });
 
@@ -162,7 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // u zgjodh fjala - të gjithëve t'u hiqet perdja e zezë
-<<<<<<< HEAD
   socket.on('word chosen', function (underfjala, poVizaton) {
     mesazhe.slideUp();
     curLojtar = poVizaton;
@@ -226,21 +188,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     lista += '</ul>';
     mesazhe.empty().append($(lista));
-=======
-  socket.on('word chosen', function (fjala) {
-    mesazhe.slideUp();
-    viz.append(vello);
-    var underfjala = '';
-    for(var i=0; i<fjala.length;i++){
-      underfjala+="_ ";
-    }
-    $('.fjala').append(underfjala);
-    socket.emit('fillo countdown');
-  });
-
-  socket.on('cdown', function(sek){
-    $('.ora').empty().append(sek);
->>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
   });
 
   // merr nga serveri gjendjen aktuale, laps-gomë-kovë, ngjyrë dhe madhësi maje
@@ -279,12 +226,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.which == 13) {
       var message = $(this).val();
       $(this).val('');
-<<<<<<< HEAD
       var sekonda = $('.ora').html();
       socket.emit('chat msg', nofka, message, sekonda);
-=======
-      socket.emit('chat msg', nofka, message);
->>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
     }
   });
 
@@ -300,15 +243,12 @@ document.addEventListener("DOMContentLoaded", function () {
     chatMsgs.scrollTop(function () { return this.scrollHeight; });
   });
 
-<<<<<<< HEAD
   //kur shkruan pasi e ka gjetur
   socket.on('writes in vain', function (user, mesazh) {
     chatMsgs.append('<li class="msgx" style="color: green"><strong>' + user + ':</strong> ' + mesazh + '</li>');
     chatMsgs.scrollTop(function () { return this.scrollHeight; });
   });
 
-=======
->>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
   // mesazh nga serveri nga serveri: doli dikush
   socket.on('out', function (user) {
     var chatMsgs = $('#chat ul');
@@ -406,18 +346,11 @@ document.addEventListener("DOMContentLoaded", function () {
     socket.emit('fshi');
     vizatim.saveHistory();
     socket.emit('ruajHistorine', vizatim.history.stack[vizatim.history.stack.length - 1]);
-<<<<<<< HEAD
     this.unbind('board:reset');
   })
 
   // përgjigje nga serveri: fshi komplet
   socket.on('rstBoard', function () {
-=======
-  })
-
-  // përgjigje nga serveri: fshi komplet
-  socket.on('resetBoard', function () {
->>>>>>> e0a8202006f09404d12a6d272e8c7edd346a8b50
     vizatim.ctx.fillStyle = '#fff';
     vizatim.ctx.fillRect(0, 0, vizatim.ctx.canvas.width, vizatim.ctx.canvas.height);
   });
